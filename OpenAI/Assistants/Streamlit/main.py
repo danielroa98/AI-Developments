@@ -16,23 +16,32 @@ if "thread_id" not in st.session_state:
     st.session_state.thread_id = None
 
 st.set_page_config(
-    page_title="Timothy - MedBot", 
-    page_icon=":robot:")
+    page_title="Timothy - MedBot🩺", 
+    page_icon="🩺")
 
 openai.api_key = OPENAI_KEY
 
+st.sidebar.title("Timothy - MedBot🩺")
+
+st.sidebar.markdown("Click the button in order to start chatting with Timothy.")
 if st.sidebar.button("Start Chat"):
     st.session_state.start_chat = True
     thread = client.beta.threads.create()
     st.session_state.thread_id = thread.id
 
-st.title("Timothy - MedBot")
-st.write("Timothy, your personal medical assistant.")
-
-if st.button("Restart Chat"):
+st.sidebar.markdown("Click the button in order to restart the chat with Timothy.")
+if st.sidebar.button("Restart Chat"):
     st.session_state.messages = []
     st.session_state.start_chat = False
     st.session_state.thread_id = None
+
+st.title("Timothy - MedBot🩺")
+st.write("Timothy, your personal medical assistant.")
+
+# if st.button("Restart Chat"):
+#     st.session_state.messages = []
+#     st.session_state.start_chat = False
+#     st.session_state.thread_id = None
 
 if st.session_state.start_chat:
     if "openai_model" not in st.session_state:
@@ -45,7 +54,7 @@ if st.session_state.start_chat:
             st.markdown(message["content"])
 
     if prompt := st.chat_input("Ask Timothy/Pregúntale a Timothy"):
-        st.session_state.message.append({"role": "user", "content": prompt})
+        st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
 
